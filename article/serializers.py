@@ -1,9 +1,8 @@
-from re import T
 from rest_framework import serializers
 
 from article.models import Article, Category, Tag, Avatar
-from user_info.serializers import UserDescSerializer
 from comment.serializers import CommentSerializer
+from user_info.serializers import UserDescSerializer
 
 
 class AvatarSerializer(serializers.ModelSerializer):
@@ -52,6 +51,7 @@ class ArticleCategoryDetailSerializer(serializers.ModelSerializer):
         model = Article
         fields = [
             'url',
+            'id',
             'title',
         ]
 
@@ -70,6 +70,7 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
 
 
 class ArticleBaseSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     author = UserDescSerializer(read_only=True)
     category = CategorySerializer(read_only=True)
     category_id = serializers.IntegerField(

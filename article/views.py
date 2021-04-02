@@ -12,7 +12,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUserOrReadOnly]
 
     filter_backends = [filters.SearchFilter]
-    filterset_fields = ['title']
+    search_fields = ['title']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -28,6 +28,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     permission_classes = [IsAdminUserOrReadOnly]
 
+    pagination_class = None
+
     def get_serializer_class(self):
         if self.action == 'list':
             return CategorySerializer
@@ -39,6 +41,8 @@ class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [IsAdminUserOrReadOnly]
+
+    pagination_class = None
 
 
 class AvatarViewSet(viewsets.ModelViewSet):

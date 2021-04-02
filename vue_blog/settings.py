@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '=-3(#v0)&+z1w0=oys$$pdu@)jxi19t3m)n2v#ze(=4&=@)mu2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# 修改项。允许所有的IP访问网络服务
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'user_info',
     'corsheaders',
     'comment',
+    'bishe_front',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'vue_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['bishe_front/dist'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,9 +122,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 新增项。静态文件收集目录
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
+# 即前端打包文件所在位置
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "bishe_front/dist/static/"),
+    os.path.join(BASE_DIR, '/static/')
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
+    'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -132,3 +144,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+}
