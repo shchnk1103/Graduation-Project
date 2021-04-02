@@ -61,7 +61,7 @@ ROOT_URLCONF = 'vue_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['bishe_front/dist'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,8 +127,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 # 即前端打包文件所在位置
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "bishe_front/dist/static/"),
-    os.path.join(BASE_DIR, '/static/')
+    os.path.join(BASE_DIR, "bishe_front/dist/"),
 ]
 
 REST_FRAMEWORK = {
