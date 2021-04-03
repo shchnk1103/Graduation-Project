@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'user_info',
     'corsheaders',
     'comment',
-    'bishe_front',
 ]
 
 MIDDLEWARE = [
