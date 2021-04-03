@@ -6,42 +6,39 @@
       <div class="position">
         <div class="title-position">
           <h3>发表评论</h3>
-          <p class="subtitle"> 已有 {{ comments.length }} 条评论</p>
+          <p class="subtitle">已有 {{ comments.length }} 条评论</p>
         </div>
 
         <!-- 评论多行文本输入控件 -->
         <textarea
-            v-model="message"
-            :placeholder="placeholder"
-            name="comment"
-            id="comment-area"
-            cols="55"
-            rows="10"
+          v-model="message"
+          :placeholder="placeholder"
+          name="comment"
+          id="comment-area"
+          cols="55"
+          rows="10"
         ></textarea>
         <div>
           <button @click="submit" class="submitBtn">发布</button>
         </div>
 
         <!-- 渲染所有评论内容 -->
-        <div
-            v-for="comment in comments"
-            :key="comment.id"
-        >
+        <div v-for="comment in comments" :key="comment.id">
           <div class="comments">
             <div>
-        <span class="username">
-          {{ comment.author.username }}
-        </span>
+              <span class="username">
+                {{ comment.author.username }}
+              </span>
               -
               <span class="created">
-          {{ formatted_time(comment.created) }}
-        </span>
+                {{ formatted_time(comment.created) }}
+              </span>
               <span v-if="comment.parent">
-          对
-          <span class="parent">
-            {{ comment.parent.author.username }}
-          </span>
-        </span>
+                对
+                <span class="parent">
+                  {{ comment.parent.author.username }}
+                </span>
+              </span>
               说：
             </div>
             <div class="content">
@@ -71,23 +68,25 @@ export default {
   data() {
     return {
       comments: [],
-      message: '',
-      placeholder: '留下评论吧。。。',
-      parentID: null
-    }
+      message: "",
+      placeholder: "留下评论吧。。。",
+      parentID: null,
+    };
   },
   // 监听 article 对象
   // 以便实时更新评论
   watch: {
     article() {
-      this.comments = this.article !== null ? this.article.comments : []
-    }
+      this.comments = this.article !== null ? this.article.comments : [];
+    },
   },
   methods: {
     submit() {
-      authorization().then(response => {
+      authorization().then((response) => {
         if (response[0]) {
-          axios.post('http://127.0.0.1:8000/api/comment/',
+          axios
+            .post(
+              "/api/comment/",
               {
                 content: this.message,
                 article_id: this.article.id,
@@ -95,33 +94,35 @@ export default {
               },
               {
                 headers: {
-                  Authorization: 'Bearer ' + localStorage.getItem('access.bishe')
-                }
+                  Authorization:
+                    "Bearer " + localStorage.getItem("access.bishe"),
+                },
               }
-          ).then(response => {
-            // 将新评论添加到顶部
-            this.comments.unshift(response.data)
-            this.message = ''
-            alert('留言成功！！！')
-          })
+            )
+            .then((response) => {
+              // 将新评论添加到顶部
+              this.comments.unshift(response.data);
+              this.message = "";
+              alert("留言成功！！！");
+            });
         } else {
-          alert('请先登录再评论！！！')
+          alert("请先登录再评论！！！");
         }
-      })
+      });
     },
     // 对某条评论进行评论
     // 即二级评论
     replyTo(comment) {
-      this.parentID = comment.id
-      this.placeholder = '对' + comment.author.username + '说:'
+      this.parentID = comment.id;
+      this.placeholder = "对" + comment.author.username + "说:";
     },
     // 修改日期显示格式
     formatted_time(iso_date_string) {
-      const date = new Date(iso_date_string)
-      return date.toLocaleDateString() + '  ' + date.toLocaleTimeString()
-    }
-  }
-}
+      const date = new Date(iso_date_string);
+      return date.toLocaleDateString() + "  " + date.toLocaleTimeString();
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -140,7 +141,7 @@ export default {
   padding-left: 1%;
   padding-right: 1%;
   margin-top: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .position {

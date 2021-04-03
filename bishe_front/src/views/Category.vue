@@ -55,7 +55,6 @@
 
 <script>
 import NavBar from "@/components/Home/Navbar";
-import { getCategories } from "@/network/home";
 import axios from "axios";
 import BlogFooter from "@/components/Home/Blogfooter";
 
@@ -73,18 +72,16 @@ export default {
     };
   },
   mounted() {
-    getCategories().then((response) => {
-      this.categories = response;
-      this.number_of_categories = response.length;
+    axios.get("/api/category/").then((response) => {
+      this.categories = response.data;
+      this.number_of_categories = response.data.length;
     });
   },
   methods: {
     getCategoryArticles(category_id) {
-      axios
-        .get("http://127.0.0.1:8000/api/category/" + category_id + "/")
-        .then((response) => {
-          this.articles = response.data.articles;
-        });
+      axios.get("/api/category/" + category_id + "/").then((response) => {
+        this.articles = response.data.articles;
+      });
     },
   },
 };

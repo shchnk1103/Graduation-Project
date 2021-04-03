@@ -77,7 +77,7 @@
 </template>
 
 <script>
-const { getArticleList } = require("@/network/home");
+import axiox from "axios";
 
 export default {
   name: "ArticleList",
@@ -100,15 +100,18 @@ export default {
   methods: {
     // 请求文章
     getArticleList: function () {
-      getArticleList(this.$route.query.page, this.$route.query.search).then(
-        (response) => {
-          this.articles = response.results;
-          this.pages = response;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      let url = "/api/articles";
+      let params = new URLSearchParams();
+      params.appendIfExists("page", this.$route.query.page);
+      params.appendIfExists("search", this.$route.query.search);
+      const paramsString = params.toString();
+      if (paramsString.charAt(0) !== "") {
+        url += "/?" + paramsString;
+      }
+      axiox.get(url).then((response) => {
+        this.articles = response.data.results;
+        this.pages = response.data;
+      });
     },
     // 格式化时间
     formatted_time: function (iso_date_string) {

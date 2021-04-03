@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <el-header class="rm-padding">
-      <navbar/>
+      <navbar />
     </el-header>
 
     <el-row v-if="article != null">
@@ -11,15 +11,16 @@
         <div class="article-detail">
           <h1 id="title">{{ article.title }}</h1>
           <p id="subtitle">
-            {{ category }} · {{ username }} · {{ formatted_time(article.created) }}
+            {{ category }} · {{ username }} ·
+            {{ formatted_time(article.created) }}
             <span v-if="isSuperuser">
-            <router-link
-                :to="{ name: 'ArticleEdit', params: { id: article.id }}"
+              <router-link
+                :to="{ name: 'ArticleEdit', params: { id: article.id } }"
                 class="edit"
-            >
-              编辑
-            </router-link>
-          </span>
+              >
+                编辑
+              </router-link>
+            </span>
           </p>
           <div v-html="article.body_html" class="article-body"></div>
         </div>
@@ -34,21 +35,19 @@
       </el-col>
     </el-row>
 
-    <comments :article="article"/>
+    <comments :article="article" />
 
     <el-footer class="rm-padding">
       <blog-footer></blog-footer>
     </el-footer>
-
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Home/Navbar"
-import BlogFooter from "@/components/Home/Blogfooter"
-import {getArticleDetail} from "@/network/home";
+import Navbar from "@/components/Home/Navbar";
+import BlogFooter from "@/components/Home/Blogfooter";
 import Comments from "@/components/Home/Comments";
-
+import axios from "axios";
 
 export default {
   name: "ArticleDetail",
@@ -60,29 +59,29 @@ export default {
   data() {
     return {
       article: {},
-      username: '',
-      category: '',
-    }
+      username: "",
+      category: "",
+    };
   },
   mounted() {
-    getArticleDetail(this.$route.params.id).then(response => {
-      this.article = response
-      this.username = response.author.username
-      this.category = response.category.title
-    })
+    axios.get("/api/articles/" + this.$route.params.id).then((response) => {
+      this.article = response.data;
+      this.username = response.data.author.username;
+      this.category = response.data.category.title;
+    });
   },
   methods: {
     formatted_time: function (iso_date_string) {
       const date = new Date(iso_date_string);
-      return date.toLocaleDateString()
-    }
+      return date.toLocaleDateString();
+    },
   },
   computed: {
     isSuperuser() {
-      return localStorage.getItem('isSuperuser.bishe') === 'true'
-    }
-  }
-}
+      return localStorage.getItem("isSuperuser.bishe") === "true";
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -116,14 +115,14 @@ export default {
 .article-detail {
   padding-left: 2%;
   margin-bottom: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .toc-detail {
   width: 300px;
   margin-bottom: 10px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   margin-left: 8%;
 }
 

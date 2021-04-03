@@ -46,7 +46,6 @@
 
 <script>
 import NavBar from "@/components/Home/Navbar";
-import { getTags } from "@/network/home";
 import axios from "axios";
 
 export default {
@@ -61,19 +60,17 @@ export default {
     };
   },
   mounted() {
-    getTags().then((response) => {
-      this.tags = response;
-      this.number_of_tags = response.length;
+    axios.get("/api/tag/").then((response) => {
+      this.tags = response.data;
+      this.number_of_tags = response.data.length;
       console.log(this.tags);
     });
   },
   methods: {
     getTagArticles(tag_id) {
-      axios
-        .get("http://127.0.0.1:8000/api/tag/" + tag_id + "/")
-        .then((response) => {
-          console.log(response.data);
-        });
+      axios.get("/api/tag/" + tag_id + "/").then((response) => {
+        console.log(response.data);
+      });
     },
   },
 };

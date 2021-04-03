@@ -43,6 +43,7 @@
 
 <script>
 import { getCategories, getTags } from "@/network/home";
+import axios from "axios";
 
 export default {
   name: "Sidebar",
@@ -55,13 +56,13 @@ export default {
     };
   },
   mounted() {
-    getCategories().then((response) => {
-      this.categories = response;
-      this.number_of_categories = response.length;
+    axios.get("/api/category/").then((response) => {
+      this.categories = response.data;
+      this.number_of_categories = response.data.length;
     });
-    getTags().then((response) => {
-      this.tags = response;
-      this.number_of_tags = response.length;
+    axios.get("/api/tag/").then((response) => {
+      this.tags = response.data;
+      this.number_of_tags = response.data.length;
     });
   },
 };
