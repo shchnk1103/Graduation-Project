@@ -1,13 +1,18 @@
 <template>
   <div class="not-found">
-    <img src="../assets/404.gif" alt="">
+    <img :src="src" alt="" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "404"
-}
+  name: "404",
+  data() {
+    return {
+      src: require("../../public/404.gif"),
+    };
+  },
+};
 </script>
 
 <style scoped>

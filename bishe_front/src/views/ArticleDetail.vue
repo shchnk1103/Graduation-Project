@@ -113,12 +113,14 @@ export default {
 }
 
 .article-detail {
+  margin-top: 15px;
   padding-left: 2%;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .toc-detail {
+  margin-top: 15px;
   width: 300px;
   margin-bottom: 10px;
   text-align: center;

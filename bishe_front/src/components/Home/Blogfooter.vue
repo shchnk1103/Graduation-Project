@@ -3,11 +3,7 @@
     <!--校标-->
     <el-col :span="8">
       <a href="http://zwu.edu.cn/">
-        <el-image
-            :src="src"
-            fit="contain"
-        class="school-badge">
-        </el-image>
+        <el-image :src="src" fit="contain" class="school-badge"> </el-image>
       </a>
     </el-col>
 
@@ -24,10 +20,10 @@ export default {
   name: "BlogFooter",
   data() {
     return {
-      src: require('@/assets/wlxy.png')
-    }
+      src: require("../../../public/wlxy.png"),
+    };
   },
-}
+};
 </script>
 
 <style scoped>
@@ -40,7 +36,7 @@ export default {
   background: whitesmoke;
   text-align: center;
   font-weight: bold;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .school-badge {

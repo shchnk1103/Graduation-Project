@@ -85,7 +85,8 @@ export default {
 .category-button,
 .tag-button {
   margin-left: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  margin-top: 4px;
 }
 
 .position-left {

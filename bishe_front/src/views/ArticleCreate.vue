@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <nav-bar />
+  <el-row>
+    <nav-bar class="navbar" />
 
     <div id="article-create">
       <h3>发表文章</h3>
@@ -47,12 +47,13 @@
         <!--正文-->
         <div class="form-elem">
           <span>正文：</span>
-          <textarea
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 4 }"
             v-model="body"
             placeholder="输入正文"
-            rows="20"
-            cols="50"
-          ></textarea>
+          >
+          </el-input>
         </div>
 
         <div class="form-elem button">
@@ -66,7 +67,7 @@
     <br />
 
     <blog-footer />
-  </div>
+  </el-row>
 </template>
 
 <script>
@@ -203,6 +204,7 @@ export default {
 }
 
 #article-create {
+  margin-top: 10px;
   text-align: center;
   font-size: large;
 }
@@ -240,5 +242,11 @@ button {
   width: 100px;
   display: inline-block;
   text-align: center;
+}
+
+.navbar {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 </style>

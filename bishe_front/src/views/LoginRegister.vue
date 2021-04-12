@@ -1,31 +1,35 @@
 <template>
-  <div class="container" :class="{'sign-up-mode':signUpMode}">
+  <div class="container" :class="{ 'sign-up-mode': signUpMode }">
     <div class="forms-container">
       <div class="login-signup">
         <!--登陆-->
-        <login-form/>
+        <login-form />
         <!--注册-->
-        <register-form/>
+        <register-form />
       </div>
     </div>
 
     <div class="panels-container">
       <div class="panel left-panel">
         <div class="content">
-          <h3>注册注册注册</h3>
-          <p>123</p>
-          <button @click="signUpMode = !signUpMode" class="btn transparent">注册</button>
+          <h3>苦难磨炼一些人，也毁灭另一些人</h3>
+          <p>富勒</p>
+          <button @click="signUpMode = !signUpMode" class="btn transparent">
+            注册
+          </button>
         </div>
-        <img src="../assets/login.svg" class="image" alt="">
+        <img src="../assets/login.svg" class="image" alt="" />
       </div>
 
       <div class="panel right-panel">
         <div class="content">
-          <h3>登陆登陆登陆</h3>
-          <p>321</p>
-          <button @click="signUpMode = !signUpMode" class="btn transparent">登陆</button>
+          <h3>你相信什么，你就成为什么样的人</h3>
+          <p>奥普拉·温弗瑞</p>
+          <button @click="signUpMode = !signUpMode" class="btn transparent">
+            登陆
+          </button>
         </div>
-        <img src="../assets/register.svg" class="image" alt="">
+        <img src="../assets/register.svg" class="image" alt="" />
       </div>
     </div>
   </div>
@@ -44,9 +48,9 @@ export default {
   data() {
     return {
       signUpMode: false,
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style scoped>

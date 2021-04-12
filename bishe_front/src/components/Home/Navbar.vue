@@ -1,15 +1,10 @@
 <template>
   <el-row :gutter="15" class="navbar">
-
     <!--Logo-->
     <el-col :span="8">
       <div class="block">
         <a href="/">
-          <el-image
-              class="header-photo"
-              :src="src"
-              fit="contain">
-          </el-image>
+          <el-image class="header-photo" :src="src" fit="contain"> </el-image>
         </a>
       </div>
     </el-col>
@@ -17,10 +12,11 @@
     <!--搜索框-->
     <el-col :span="5">
       <div class="search demo-input-suffix">
-        <el-input v-model="input"
-                  suffix-icon="el-icon-search"
-                  placeholder="请输入内容"
-                  @keyup.enter.native="searchArticles"
+        <el-input
+          v-model="input"
+          suffix-icon="el-icon-search"
+          placeholder="请输入内容"
+          @keyup.enter.native="searchArticles"
         >
         </el-input>
       </div>
@@ -54,17 +50,17 @@
     <!--头像-->
     <el-col :span="4" class="userprofile">
       <div class="block main-info avatar" v-if="hasLogin">
-<!--        <el-avatar-->
-<!--            :src="circleUrl"-->
-<!--        >-->
-<!--        </el-avatar>-->
-
         <!--下拉框-->
         <div class="dropdown">
           <button class="drop-btn">{{ username }}!</button>
           <div class="dropdown-content">
-            <router-link :to="{ name: 'UserCenter', params: { username: username }}">用户中心</router-link>
-            <router-link :to="{ name: 'ArticleCreate'}" v-if="isSuperuser">发表文章</router-link>
+            <router-link
+              :to="{ name: 'UserCenter', params: { username: username } }"
+              >用户中心</router-link
+            >
+            <router-link :to="{ name: 'ArticleCreate' }" v-if="isSuperuser"
+              >发表文章</router-link
+            >
             <router-link v-on:click.prevent="logout()" to="">登出</router-link>
           </div>
         </div>
@@ -73,7 +69,9 @@
       <div class="login-and-register" v-else>
         <el-link href="/login" type="danger" class="login-button">登陆</el-link>
         <span> / </span>
-        <el-link href="/login" type="warning" class="register-button">注册</el-link>
+        <el-link href="/login" type="warning" class="register-button">
+          注册
+        </el-link>
       </div>
     </el-col>
 
@@ -88,38 +86,38 @@ export default {
   name: "NavBar",
   data() {
     return {
-      src: "https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png",
-      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      input: '',
+      src:
+        "https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png",
+      circleUrl:
+        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      input: "",
       hasLogin: false,
-      username: '',
-      isSuperuser: JSON.parse(localStorage.getItem('isSuperuser.bishe'))
-    }
+      username: "",
+      isSuperuser: JSON.parse(localStorage.getItem("isSuperuser.bishe")),
+    };
   },
   mounted() {
-    authorization().then(
-        (data) => [this.hasLogin, this.username] = data
-    )
+    authorization().then((data) => ([this.hasLogin, this.username] = data));
   },
   methods: {
     // 搜索文章
     searchArticles() {
-      const text = this.input.trim()
-      if (text.charAt(0) !== '') {
-        this.$router.push({name: 'Home', query: {search: text}})
+      const text = this.input.trim();
+      if (text.charAt(0) !== "") {
+        this.$router.push({ name: "Home", query: { search: text } });
       }
     },
     // 登出
     logout() {
-      localStorage.clear()
-      window.location.reload(false)
-      alert('登出成功！')
+      localStorage.clear();
+      window.location.reload(false);
+      alert("登出成功！");
     },
     refresh() {
-      this.username = localStorage.getItem('username.bishe')
-    }
+      this.username = localStorage.getItem("username.bishe");
+    },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -133,7 +131,7 @@ a:hover {
 }
 
 .navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 .header-photo {
@@ -196,7 +194,8 @@ a:hover {
   height: 25px;
 }
 
-.login-button, .register-button {
+.login-button,
+.register-button {
   margin-bottom: 5px;
 }
 
@@ -263,7 +262,7 @@ a:hover {
 
 /* 鼠标移上去后修改下拉菜单链接颜色 */
 .dropdown-content a:hover {
-  background-color: #f1f1f1
+  background-color: #f1f1f1;
 }
 
 /* 在鼠标移上去后显示下拉菜单 */

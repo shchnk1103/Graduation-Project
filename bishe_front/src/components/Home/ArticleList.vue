@@ -58,6 +58,7 @@
       </div>
     </el-col>
   </el-row>
+
   <el-row v-else>
     <el-col :span="5"></el-col>
     <el-col :span="14" class="article">
@@ -91,7 +92,7 @@ export default {
     return {
       articles: {},
       pages: {},
-      src: require("@/assets/404.gif"),
+      src: require("../../../public/404.gif"),
     };
   },
   mounted() {
@@ -109,6 +110,7 @@ export default {
         url += "/?" + paramsString;
       }
       axiox.get(url).then((response) => {
+        console.log(response.data.results);
         this.articles = response.data.results;
         this.pages = response.data;
       });

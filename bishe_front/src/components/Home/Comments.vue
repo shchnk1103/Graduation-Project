@@ -10,21 +10,44 @@
         </div>
 
         <!-- 评论多行文本输入控件 -->
-        <textarea
-          v-model="message"
-          :placeholder="placeholder"
-          name="comment"
-          id="comment-area"
-          cols="55"
-          rows="10"
-        ></textarea>
-        <div>
+        <div v-if="hasLogin">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 4 }"
+            :placeholder="placeholder"
+            v-model="message"
+            name="comment"
+            id="comment-area"
+            class="comment-area"
+          >
+          </el-input>
           <button @click="submit" class="submitBtn">发布</button>
         </div>
+        <div v-else><p class="comment-tip">登陆之后参与评论</p></div>
 
         <!-- 渲染所有评论内容 -->
         <div v-for="comment in comments" :key="comment.id">
-          <div class="comments">
+          <!-- 父评论 -->
+          <div class="comments" v-if="!comment.parent">
+            <div>
+              <span class="username">
+                {{ comment.author.username }}
+              </span>
+              -
+              <span class="created">
+                {{ formatted_time(comment.created) }}
+              </span>
+              说：
+            </div>
+            <div class="content">
+              {{ comment.content }}
+            </div>
+            <div>
+              <button class="commentBtn" @click="replyTo(comment)">回复</button>
+            </div>
+          </div>
+          <!-- 子评论 -->
+          <div class="comments children-comments" v-else>
             <div>
               <span class="username">
                 {{ comment.author.username }}
@@ -71,6 +94,7 @@ export default {
       message: "",
       placeholder: "留下评论吧。。。",
       parentID: null,
+      hasLogin: false,
     };
   },
   // 监听 article 对象
@@ -79,6 +103,9 @@ export default {
     article() {
       this.comments = this.article !== null ? this.article.comments : [];
     },
+  },
+  mounted() {
+    authorization().then((data) => ([this.hasLogin, this.username] = data));
   },
   methods: {
     submit() {
@@ -128,11 +155,12 @@ export default {
 <style scoped>
 .title-position {
   position: relative;
+  margin-bottom: 10px;
 }
 
 .subtitle {
   position: absolute;
-  top: -13px;
+  top: 7%;
   left: 17%;
 }
 
@@ -160,7 +188,7 @@ button {
 .submitBtn {
   height: 35px;
   background: steelblue;
-  width: 60px;
+  width: 100%;
 }
 
 .commentBtn {
@@ -195,5 +223,18 @@ button {
 .content {
   font-size: large;
   padding: 15px;
+}
+
+.comment-area {
+  margin-bottom: 5px;
+}
+
+.children-comments {
+  padding-left: 2em;
+}
+
+.comment-tip {
+  text-align: center;
+  color: rgb(104, 189, 189);
 }
 </style>
