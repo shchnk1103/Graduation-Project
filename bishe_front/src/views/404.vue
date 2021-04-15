@@ -9,7 +9,7 @@ export default {
   name: "404",
   data() {
     return {
-      src: require("../../public/404.gif"),
+      src: require("../assets/404.gif"),
     };
   },
 };

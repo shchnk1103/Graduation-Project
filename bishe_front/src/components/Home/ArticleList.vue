@@ -92,7 +92,7 @@ export default {
     return {
       articles: {},
       pages: {},
-      src: require("../../../public/404.gif"),
+      src: require("../../assets/404.gif"),
     };
   },
   mounted() {

@@ -20,7 +20,7 @@ export default {
   name: "BlogFooter",
   data() {
     return {
-      src: require("../../../public/wlxy.png"),
+      src: require("../../assets/wlxy.png"),
     };
   },
 };
